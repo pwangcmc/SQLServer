@@ -32,6 +32,8 @@ where is_unique = 1
 and t.is_ms_shipped <> 1
 order by schema_name(t.schema_id) + '.' + t.[name]
 
+-- https://dataedo.com/kb/query/sql-server/list-unique-indexes-in-the-database
+
 /*
 table_view	    object_type	constraint_type	    constraint_name	    columns	        index_name	    index_type
 dbo.Department	Table	    Unique constraint	UK_Department	    Deptid, name	UK_Department	Index
