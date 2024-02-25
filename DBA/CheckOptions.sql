@@ -1,3 +1,7 @@
+-- Check XACT_ABORT settings
+SELECT GET_BIT(@@OPTIONS, 14) AS [XACT_ABORT]
+GO
+
 /*
 The following example uses the GET_BIT function to get the value from each specific bit in @@OPTIONS
 */
