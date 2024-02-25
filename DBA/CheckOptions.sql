@@ -2,6 +2,11 @@
 SELECT GET_BIT(@@OPTIONS, 14) AS [XACT_ABORT]
 GO
 
+-- Check XACT_ABORT settings
+DECLARE @XACT_ABORT VARCHAR(3) = 'OFF';
+IF ( (16384 & @@OPTIONS) = 16384 ) SET @XACT_ABORT = 'ON';
+SELECT @XACT_ABORT AS XACT_ABORT;
+      
 /*
 The following example uses the GET_BIT function to get the value from each specific bit in @@OPTIONS
 */
