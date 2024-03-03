@@ -46,7 +46,7 @@ BEGIN CATCH
 	ELSE IF ERROR_NUMBER() = 245
 		BEGIN
 			PRINT '    Handling conversion error...';
-	END
+		END
 	ELSE
 		BEGIN
 			PRINT '    Handling unknown error...';
@@ -59,7 +59,5 @@ BEGIN CATCH
 	PRINT '    Error Proc    : ' + ISNULL(ERROR_PROCEDURE(), 'Not within proc');
 
 	PRINT '  Exiting CATCH block.';
-
 END CATCH
-
 PRINT 'After TRY/CATCH block.';
