@@ -1,3 +1,24 @@
+/*
+IF DB_ID('testdb') IS NULL
+  CREATE DATABASE testdb;
+GO
+USE testdb;
+GO
+
+IF OBJECT_ID('dbo.Employees', 'U') IS NOT NULL
+  DROP TABLE dbo.Employees;
+GO
+CREATE TABLE dbo.Employees
+(
+  empid   INT         NOT NULL,
+  empname VARCHAR(25) NOT NULL,
+  mgrid   INT         NULL,
+  CONSTRAINT PK_Employees PRIMARY KEY(empid),
+  CONSTRAINT CHK_Employees_empid CHECK(empid > 0),
+  CONSTRAINT FK_Employees_Employees
+    FOREIGN KEY(mgrid) REFERENCES Employees(empid)
+*/
+
 PRINT 'Before TRY/CATCH block.';
 
 BEGIN TRY
