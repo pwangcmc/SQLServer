@@ -28,3 +28,14 @@ SELECT
   END AS transaction_isolation_level,
 FROM sys.dm_exec_sessions 
 WHERE session_id = @@SPID
+
+
+-- Syntax for SQL Server and Azure SQL Database
+  
+SET TRANSACTION ISOLATION LEVEL
+    { READ UNCOMMITTED
+    | READ COMMITTED
+    | REPEATABLE READ
+    | SNAPSHOT
+    | SERIALIZABLE
+    }
