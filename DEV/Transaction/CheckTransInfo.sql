@@ -19,11 +19,11 @@ isolation level	              read committed
 
 SELECT 
   CASE transaction_isolation_level
-	  WHEN 1 THEN 'ReadUncomitted'
-	  WHEN 2 THEN 'ReadCommitted'
-	  WHEN 3 THEN 'Repeatable'
-	  WHEN 4 THEN 'Serializable'
-	  WHEN 5 THEN 'Snapshot'
+	WHEN 1 THEN 'READ UNCOMMITTED'
+	WHEN 2 THEN 'READ COMMITTED'
+	WHEN 3 THEN 'REPEATABLE READ'
+	WHEN 4 THEN 'SERIALIZABLE'
+	WHEN 5 THEN 'SNAPSHOT'
     ELSE 'Unspecified' 
   END AS transaction_isolation_level,
 FROM sys.dm_exec_sessions 
