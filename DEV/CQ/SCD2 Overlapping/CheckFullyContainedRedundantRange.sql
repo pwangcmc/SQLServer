@@ -1,3 +1,11 @@
+/*
+ISSUSE
+AccountNubmer 1133399
+*/
+
+SELECT * FROM dbo.AccountPremiumChange WHERE AccountNumber = '1133399'
+
+
 SELECT COUNT(*) FROM dbo.AccountPremiumChange				-- 15,819
 
 /*
@@ -41,9 +49,9 @@ SELECT
         ELSE 'Valid'
     END AS Status
 FROM dbo.AccountPremiumChange A
-ORDER BY A.AccountNumber, A.AccountDid, A.ValidFromDate;
+--ORDER BY A.AccountNumber, A.AccountDid, A.ValidFromDate;
 
--- EXCEPT
+ EXCEPT
 
 /*
 *****************  Identify which row is redundat - JOIN ******************
@@ -64,12 +72,53 @@ LEFT JOIN dbo.AccountPremiumChange B
     AND B.ValidFromDate <= A.ValidFromDate
     AND B.ValidToDate >= A.ValidToDate
     AND (A.ValidFromDate <> B.ValidFromDate OR A.ValidToDate <> B.ValidToDate)
+
+WHERE a.AccountNumber = '1133399'
+
 ORDER BY A.AccountNumber, A.AccountDid, A.ValidFromDate;
 
 
 
+-- check dup --
+; WITH CTE AS (
+	SELECT 
+		A.AccountNumber,
+		A.AccountDid,
+		A.ValidFromDate,
+		A.ValidToDate,
+		CASE 
+			WHEN B.AccountNumber IS NOT NULL THEN 'Redundant'
+			ELSE 'Valid'
+		END AS Status
+	FROM dbo.AccountPremiumChange A
+	LEFT JOIN dbo.AccountPremiumChange B
+		ON A.AccountNumber = B.AccountNumber
+		AND A.AccountDid = B.AccountDid
+		AND B.ValidFromDate <= A.ValidFromDate
+		AND B.ValidToDate >= A.ValidToDate
+		AND (A.ValidFromDate <> B.ValidFromDate OR A.ValidToDate <> B.ValidToDate)
+)
+
+SELECT 
+    AccountNumber, 
+    AccountDid, 
+    ValidFromDate, 
+    ValidToDate, 
+    Status,
+    COUNT(*) AS DuplicateCount
+FROM CTE
+GROUP BY 
+    AccountNumber, 
+    AccountDid, 
+    ValidFromDate, 
+    ValidToDate, 
+    Status
+HAVING COUNT(*) > 1
+ORDER BY DuplicateCount DESC;
 
 
+
+SELECT * FROM dbo.AccountPremiumChange WHERE AccountNumber = '1133399'
 
 /*******************************************************/
 /********** Small Test ********************/
